@@ -24,20 +24,36 @@ namespace ControleContatos.Controllers
             return View();
         }
 
-        public IActionResult Editar()
+        public IActionResult Editar(int id)
         {
-            return View();
+
+            ContatoModel contato = _contatoRepositorio.ListarPorId(id); // Buscando o contato
+            return View(contato);  // Iniciando a view já com as informações do contato
         }
 
-        public IActionResult ApagarConfirmacao()
+        public IActionResult ApagarConfirmacao(int id)  // ID que vau ser apagado
         {
-            return View();
+            ContatoModel contato = _contatoRepositorio.ListarPorId(id); // Buscando o contato
+            return View(contato);  // Dando acesso pela view
+        }
+
+        public IActionResult Apagar(int id)
+        {
+            _contatoRepositorio.Apagar(id);
+            return RedirectToAction("Index");  // Retornando a página inicial (index)
         }
 
         [HttpPost]
         public IActionResult Criar(ContatoModel contato)
         {
             _contatoRepositorio.Adicionar(contato);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Alterar(ContatoModel contato)
+        {
+            _contatoRepositorio.Atualizar(contato);
             return RedirectToAction("Index");
         }
 
