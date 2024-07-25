@@ -4,11 +4,34 @@
 }
 
 <div class="text-center">
-
+    
+    <!-- Botão de adicionar contato -->
     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
         <a class="btn btn-primary" role="button" asp-controller="Contato" asp-action="Criar">Adicionar novo contato</a>
     </div>
     <br/>
+
+    @if(TempData["MensagemSucesso"] != null)
+    {
+        <!-- Alert Sucesso -->
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    @if(TempData["MensagemErro"] != null)
+    {
+        <!-- Alert Erro -->
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+            @TempData["MensagemErro"];
+        </div>
+    }
+    <br/>
+
+    
+
     <h1 class="display-4">Listagem de Contatos</h1>
 
     <table class="table">
