@@ -4,6 +4,12 @@
 * text=auto
 
 ###############################################################################
+# Force GitHub to recognize C# as the main language.
+###############################################################################
+* linguist-detectable=false
+*.cs linguist-detectable=true
+
+###############################################################################
 # Set default behavior for command prompt diff.
 #
 # This is need for earlier builds of msysgit that does not have it on by
