@@ -1,4 +1,5 @@
-﻿using ControleContatos.Models;
+﻿using ControleContatos.Helper;
+using ControleContatos.Models;
 using ControleContatos.Repositorio;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,17 +7,20 @@ namespace ControleContatos.Controllers
 {
     public class LoginController : Controller
     {
-        // Obtendo acceso ao banco de dados de usuarios
-
+        // Injetando dependências de sessão e banco de dados
+        private readonly ISessao _sessao;
         private readonly IUsuarioRepositorio _usuariorepositorio;
-        public LoginController(IUsuarioRepositorio usuarioRepositorio)
+        public LoginController(IUsuarioRepositorio usuarioRepositorio, ISessao isessao)
         {
             this._usuariorepositorio = usuarioRepositorio;
+            this._sessao = isessao;
         }
 
         // Métodos da View
         public IActionResult IndexLogin()
         {
+            // Se o usuário estiver logado redirecionar para home
+            if (_sessao.buscarSessaoUsuario() !=null) return RedirectToAction("Index", "Home");
             return View();
         }
 
@@ -37,6 +41,7 @@ namespace ControleContatos.Controllers
                         // Se a senha for válida (true), permite acesso
                         if (userModel.SenhaValida(loginModel.Senha))
                         {
+                            _sessao.CriarSessaoUsuario(userModel);  // Criando sessão
                             return RedirectToAction("Index", "Home");
                         }
                         // Senão o usuário está correto, mas a senha é inválida
@@ -55,6 +60,12 @@ namespace ControleContatos.Controllers
                 TempData["MensagemErro"] = $"Erro ao fazer o Login. Detalhe erro: {ex.Message}";
                 return RedirectToAction("IndexLogin");
             }
+        }
+
+        public IActionResult Sair()
+        {
+            _sessao.RemoverSessaoUsuario();
+            return RedirectToAction("IndexLogin", "Login");
         }
 
     }
