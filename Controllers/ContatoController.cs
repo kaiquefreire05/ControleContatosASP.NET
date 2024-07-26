@@ -1,9 +1,11 @@
-﻿using ControleContatos.Models;
+﻿using ControleContatos.Filters;
+using ControleContatos.Models;
 using ControleContatos.Repositorio;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleContatos.Controllers
 {
+    [PaginaUsuarioLogado] // Adicionando filtro, só vai cair nessa tela quem está com o usuário logado
     public class ContatoController : Controller
     {
         // Obtendo acesso a classe que faz operações CRUD

@@ -1,9 +1,11 @@
-﻿using ControleContatos.Models;
+﻿using ControleContatos.Filters;
+using ControleContatos.Models;
 using ControleContatos.Repositorio;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleContatos.Controllers
 {
+    [PaginaRestritaAdmin] // Adicionando filtro, só entra quem é admin
     public class UsuarioController : Controller
     {
         // Obtendo acesso as classes que fornece as operações CRUD

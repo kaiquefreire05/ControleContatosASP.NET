@@ -1,9 +1,11 @@
+using ControleContatos.Filters;
 using ControleContatos.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace ControleContatos.Controllers
 {
+    [PaginaUsuarioLogado] // Adicionando filtro, só vai cair nessa tela quem está com o usuário logado
     public class HomeController : Controller
     {
 
