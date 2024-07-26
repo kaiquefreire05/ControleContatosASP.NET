@@ -16,6 +16,12 @@ namespace ControleContatos.Repositorio
         }
 
         // Operações no banco de dados
+
+        public UsuarioModel BuscarPorLogin(string login)
+        {
+            return _bancoContext.Usuarios.FirstOrDefault(x => x.Login.ToUpper() == login.ToUpper());
+        }
+
         public UsuarioModel Adicionar(UsuarioModel usuario)
         {
             usuario.DataCadastro = DateTime.Now;  // Adicionando data de criação como no banco de dados
@@ -46,9 +52,9 @@ namespace ControleContatos.Repositorio
             userDB.Email = usuario.Email;
             userDB.Perfil = usuario.Perfil;
             userDB.DataAtualizacao = DateTime.Now;  // Adicionando data de atualização
-
-
             _bancoContext.Usuarios.Update(userDB);
+            _bancoContext.SaveChanges();
+
             return userDB;
         }
 
@@ -59,7 +65,7 @@ namespace ControleContatos.Repositorio
 
         public UsuarioModel ListarPorId(int id)
         {
-            #pragma warning disable CS8603 // Possible null reference return.
+            #pragma warning disable CS8603 // Possível retorno nulo
             return _bancoContext.Usuarios.FirstOrDefault(x => x.ID == id);
 
         }

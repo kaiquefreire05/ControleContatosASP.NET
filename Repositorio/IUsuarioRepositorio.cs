@@ -13,5 +13,7 @@ namespace ControleContatos.Repositorio
         UsuarioModel Atualizar (UsuarioModel usuario);
 
         bool Apagar(int id);
+
+        UsuarioModel BuscarPorLogin(string login);
     }
 }

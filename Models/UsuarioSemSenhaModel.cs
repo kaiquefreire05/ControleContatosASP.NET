@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ControleContatos.Models
 {
-    public class UsuarioModel
+    public class UsuarioSemSenhaModel
     {
         public int ID { get; set; }
         [Required(ErrorMessage = "Digite o nome do usuário")]
@@ -15,16 +15,6 @@ namespace ControleContatos.Models
         public string Email { get; set; }
         [Required(ErrorMessage = "Insira o perfil do usuário")]
         public PerfilEnum? Perfil { get; set; }
-        [Required(ErrorMessage = "Digite a senha do usuário")]
-        public string Senha { get; set; }
-        public DateTime DataCadastro { get; set; }
-        public DateTime? DataAtualizacao { get; set; }
-        // ? significa que campo pode ser nulo
 
-        // Retorna true se senha do objeto for igual a senha do parâmetro
-        public bool SenhaValida(String senha)
-        {
-            return Senha == senha;
-        }
     }
 }

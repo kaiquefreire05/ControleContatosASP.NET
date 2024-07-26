@@ -1,0 +1,20 @@
+﻿@model UsuarioModel // Model que vai trazer os dados para a página HTML
+@{
+    ViewData["Title"] = "Confirmação de exclusão de usuário";
+}
+
+<div class="text-center">
+
+    <h3>Realmente deseja apagar o contato (@Model.Nome)?</h3>
+       
+    <a class="btn btn-primary btn-block" role="button" asp-controller="Usuario" asp-action="Index">Cancelar Exclusão</a>
+    <a class="btn btn-secondary btn-block" role="button" asp-controller="Usuario" asp-action="Apagar" asp-route-id="@Model.ID" role="button">Confirmar Exclusão</a>
+
+</div>
+
+<!--
+
+asp-route-id, envia o ID do usuário para a página de confirmação de exclusão
+
+-->
+

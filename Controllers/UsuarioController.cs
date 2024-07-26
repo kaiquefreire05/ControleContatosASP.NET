@@ -51,5 +51,77 @@ namespace ControleContatos.Controllers
                 return RedirectToAction("Index"); // Página principal
             }
         }
+
+        public IActionResult ApagarConfirmacao(int id)
+        {
+            UsuarioModel user = _usuarioRepositorio.ListarPorId(id);  // Enviando o user para a página
+            return View(user);
+        }
+
+        public IActionResult Apagar(int id)
+        {
+            try
+            {
+                bool sucess = _usuarioRepositorio.Apagar(id);
+
+                if (sucess)
+                {
+                    TempData["MensagemSucesso"] = "Usuário foi apagado com sucesso";
+                }
+                else
+                {
+                    TempData["MensagemErro"] = "Usuário não foi apagado";
+                }
+                return RedirectToAction("Index");  // Retornando a página inicial
+
+            }
+            catch (System.Exception ex)
+            {
+                TempData["MensagemErro"] = $"Usuário não foi apagado. Detalhes erro: {ex.Message}";
+                return RedirectToAction("Index");  // Retornando a página inicial
+            }
+        }
+
+        public IActionResult Editar (int id)
+        {
+            UsuarioModel user = _usuarioRepositorio.ListarPorId(id);
+            return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult Editar(UsuarioSemSenhaModel userSemSenha)
+        {
+            try
+            {
+                UsuarioModel user = null;
+
+                // Verificando se os campos estão devidamente preenchidos
+                if (ModelState.IsValid)
+                {
+                    user = new UsuarioModel()
+                    {
+                        ID = userSemSenha.ID,
+                        Nome = userSemSenha.Nome,
+                        Login = userSemSenha.Login,
+                        Email = userSemSenha.Email,
+                        Perfil = userSemSenha.Perfil
+                    };
+
+                    user = _usuarioRepositorio.Atualizar(user);
+                    TempData["MensagemSucesso"] = "Usuário editado com sucesso";
+                    return RedirectToAction("Index");  // Retornando tela inicial
+                }
+
+                return View(user);
+
+            } 
+            catch (System.Exception ex)
+            {
+                TempData["MensagemErro"] = $"Erro ao excluir usuário. Detalhes erro: {ex.Message}";
+                return RedirectToAction("Index");  // Retornando tela inicial
+            }
+        }
+
+
     }
 }
