@@ -1,0 +1,55 @@
+﻿using ControleContatos.Models;
+using ControleContatos.Repositorio;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ControleContatos.Controllers
+{
+    public class UsuarioController : Controller
+    {
+        // Obtendo acesso as classes que fornece as operações CRUD
+        private readonly IUsuarioRepositorio _usuarioRepositorio;
+
+        public UsuarioController(IUsuarioRepositorio usuarioRepositorio)
+        {
+            this._usuarioRepositorio = usuarioRepositorio;
+        }
+
+        // Views relacionadas a Usuário
+
+        public IActionResult Index()
+        {
+            List<UsuarioModel> usuarios = _usuarioRepositorio.BuscarTodos();
+
+            // Retornando a lista de usuários na página
+            return View(usuarios);
+
+        }
+
+        public IActionResult Criar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Criar(UsuarioModel usuario)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _usuarioRepositorio.Adicionar(usuario);
+                    TempData["MensagemSucesso"] = "Usuário foi cadastrado com sucesso";
+                    return RedirectToAction("Index");  // Página principal
+                }
+
+                return View(usuario);
+
+            }
+            catch (System.Exception ex)
+            {
+                TempData["MensagemErro"] = $"Erro ao cadastrar o usuário. Detalhes erro: {ex.Message}";
+                return RedirectToAction("Index"); // Página principal
+            }
+        }
+    }
+}
