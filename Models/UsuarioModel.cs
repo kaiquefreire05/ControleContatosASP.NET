@@ -1,4 +1,5 @@
 ﻿using ControleContatos.Enums;
+using ControleContatos.Helper;
 using System.ComponentModel.DataAnnotations;
 
 namespace ControleContatos.Models
@@ -24,7 +25,13 @@ namespace ControleContatos.Models
         // Retorna true se senha do objeto for igual a senha do parâmetro
         public bool SenhaValida(String senha)
         {
-            return Senha == senha;
+            return Senha == senha.GerarHash();
         }
+
+        public void setSenhaHash()
+        {
+            Senha = Senha.GerarHash();
+        }
+
     }
 }

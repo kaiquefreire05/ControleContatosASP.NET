@@ -25,6 +25,7 @@ namespace ControleContatos.Repositorio
         public UsuarioModel Adicionar(UsuarioModel usuario)
         {
             usuario.DataCadastro = DateTime.Now;  // Adicionando data de criação como no banco de dados
+            usuario.setSenhaHash();  // Transformando senha em hash
             _bancoContext.Usuarios.Add(usuario);
             _bancoContext.SaveChanges();
             return usuario;
