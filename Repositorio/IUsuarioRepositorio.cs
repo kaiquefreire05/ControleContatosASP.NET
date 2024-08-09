@@ -15,5 +15,7 @@ namespace ControleContatos.Repositorio
         bool Apagar(int id);
 
         UsuarioModel BuscarPorLogin(string login);
+
+        UsuarioModel BuscarPorEmailLogin(string email, string login);
     }
 }

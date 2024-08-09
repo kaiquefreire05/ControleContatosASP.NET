@@ -15,6 +15,15 @@
 }
 <br/>
 
+<!-- Mensagem de sucesso -->
+@if (TempData["MensagemSucesso"] != null)
+{
+    <!-- Alert Sucesso -->
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+        @TempData["MensagemSucesso"]
+    </div>
+}
 
 <!-- Formuário de Login -->
 <form asp-controller="Login" asp-action="Entrar" method="post">
@@ -32,6 +41,13 @@
         @Html.ValidationMessageFor(x => x.Senha)  <!-- Se campo for nulo mostrar mensagem de erro -->
     </div>
 
+    <!-- Redefinir a senha -->
+    <p class="mb-4 text-sm mx-auto">
+        Esqueceu sua senha?
+        <a asp-action="RedefinirSenha" asp-controller="Login" class="text-primary text-gradient font-weight-bold">Redefinir minha senha</a>
+    </p>
+
+    <!-- Botão entrar -->
     <button type="submit" class="btn btn-primary btn-block">Entrar</button>
 
 </form>
